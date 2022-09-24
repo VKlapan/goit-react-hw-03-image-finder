@@ -2,8 +2,8 @@ import { Component } from 'react';
 import axios from 'axios';
 
 import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
-import { GalleryList } from './ImageGallery.styled';
-//import ButtonLoadMore from './ButtonLoadMore/ButtonLoadMore';
+import { Gallery, GalleryList } from './ImageGallery.styled';
+import Button from './Button/Button';
 
 class ImageGallery extends Component {
   BASE_URL = 'https://pixabay.com/api/';
@@ -45,7 +45,7 @@ class ImageGallery extends Component {
 
   async getGalleryData(url) {
     const response = await axios.get(url);
-    const images = await response.data.hits;
+    const images = response.data.hits;
     let result = null;
 
     if (images.length === 0) {
@@ -86,7 +86,7 @@ class ImageGallery extends Component {
     console.log(totalPages);
 
     return (
-      <>
+      <Gallery>
         {this.state.loading && <div> LOADING..............</div>}
         {this.state.error && <div>Opsss... {this.state.error}</div>}
         <GalleryList>
@@ -95,11 +95,9 @@ class ImageGallery extends Component {
           ))}
         </GalleryList>
         {this.state.page < totalPages && (
-          <button type="button" onClick={this.loadMore}>
-            LOAD MORE
-          </button>
+          <Button clickHandle={this.loadMore}>LOAD MORE</Button>
         )}
-      </>
+      </Gallery>
     );
   }
 }

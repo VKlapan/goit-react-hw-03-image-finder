@@ -1,5 +1,11 @@
 import styled from '@emotion/styled';
 
+export const Gallery = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
 export const GalleryList = styled.ul`
   display: grid;
   max-width: calc(100vw - 48px);
