@@ -14,14 +14,16 @@ class ImageGallery extends Component {
   state = {
     images: null,
     loading: false,
+    error: null,
   };
 
   async searchImage(query = '') {
-    this.setState({ loading: true });
+    this.setState({ loading: true, images: null, error: null });
     await this.getPics(this.getUrl(query))
       .then(result => {
         this.setState({ images: result.images });
       })
+      .catch(error => this.setState({ error: error }))
       .finally(() => this.setState({ loading: false }));
   }
 
@@ -66,16 +68,19 @@ class ImageGallery extends Component {
 
   render() {
     const { images } = this.state;
-    if (!images) return;
+    //    if (!images) return;
 
     return (
       <>
         {this.state.loading && <div> LOADING..............</div>}
-        <GalleryList>
-          {images.map(image => (
-            <ImageGalleryItem key={image.id} image={image} />
-          ))}
-        </GalleryList>
+        {this.state.error && <div>Opsss... {this.state.error}</div>}
+        {images && (
+          <GalleryList>
+            {images.map(image => (
+              <ImageGalleryItem key={image.id} image={image} />
+            ))}
+          </GalleryList>
+        )}
       </>
     );
   }
