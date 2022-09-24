@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
 import { GalleryList } from './ImageGallery.styled';
-import ButtonLoadMore from './ButtonLoadMore/ButtonLoadMore';
+//import ButtonLoadMore from './ButtonLoadMore/ButtonLoadMore';
 
 class ImageGallery extends Component {
   BASE_URL = 'https://pixabay.com/api/';
@@ -63,7 +63,7 @@ class ImageGallery extends Component {
 
   async componentDidMount() {
     console.log('mount');
-    this.getImages();
+    //   this.getImages();
   }
 
   async componentDidUpdate(prevProps, prevState) {
