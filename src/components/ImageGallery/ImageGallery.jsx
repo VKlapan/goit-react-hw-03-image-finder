@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Component } from 'react';
 import axios from 'axios';
 
@@ -102,11 +103,7 @@ class ImageGallery extends Component {
         {this.state.error && <div>Opsss... {this.state.error}</div>}
         <GalleryList>
           {images.map(image => (
-            <ImageGalleryItem
-              key={image.id}
-              image={image}
-              onClick={this.toggleModal}
-            />
+            <ImageGalleryItem key={image.id} image={image} />
           ))}
         </GalleryList>
         {this.state.page < totalPages && !this.state.error && (
@@ -117,3 +114,7 @@ class ImageGallery extends Component {
   }
 }
 export default ImageGallery;
+
+ImageGallery.propTypes = {
+  query: PropTypes.string.isRequired,
+};
