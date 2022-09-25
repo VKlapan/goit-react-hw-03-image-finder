@@ -1,91 +1,81 @@
-**Read in other languages: [Русский](README.md), [Polska](README.pl.md),
-[English](README.en.md), [Spanish](README.es.md).**
+Image Search. Write a keyword image search application. Preview of a working
+application see link.
 
-# React homework template
+Create components <Searchbar>, <ImageGallery>, <ImageGalleryItem>, <Loader>,
+<Button> и <Modal>. Ready styles of components can be taken in file styles.css
+and tweak them if needed.
 
-Этот проект был создан при помощи
-[Create React App](https://github.com/facebook/create-react-app). Для знакомства
-и настройки дополнительных возможностей
-[обратись к документации](https://facebook.github.io/create-react-app/docs/getting-started).
+component preview Pixabay API instructions For HTTP requests, use a public image
+search service Pixabay. Register and get a private access key.
 
-## Подготовка нового проекта
+The URL string of the HTTP request.
 
-1. Убедись что на компьютере установлена LTS-версия Node.js.
-   [Скачай и установи](https://nodejs.org/en/) её если необходимо.
-2. Клонируй этот репозиторий.
-3. Измени имя папки с `react-homework-template` на имя своего проекта.
-4. Создай новый пустой репозиторий на GitHub.
-5. Открой проект в VSCode, запусти терминал и свяжи проект с GitHub-репозиторием
-   [по инструкции](https://docs.github.com/en/get-started/getting-started-with-git/managing-remote-repositories#changing-a-remote-repositorys-url).
-6. Установи базовые зависимости проекта командой `npm install`.
-7. Запусти режим разработки, выполнив команду `npm start`.
-8. Перейди в браузере по адресу [http://localhost:3000](http://localhost:3000).
-   Эта страница будет автоматически перезагружаться после сохранения изменений в
-   файлах проекта.
+https://pixabay.com/api/?q=cat&page=1&key=your_key&image_type=photo&orientation=horizontal&per_page=12
 
-## Деплой
+Pixabay API supports pagination, by default the page parameter is set to
+1`. Let the response comes with 12 objects each, set to per_page`. Don't
+Remember that when you search for a new keyword, you have to reset the value of
+pageto1`.
 
-Продакшн версия проекта будет автоматически проходить линтинг, собираться и
-деплоиться на GitHub Pages, в ветку `gh-pages`, каждый раз когда обновляется
-ветка `main`. Например, после прямого пуша или принятого пул-реквеста. Для этого
-необходимо в файле `package.json` отредактировать поле `homepage`, заменив
-`your_username` и `your_repo_name` на свои, и отправить изменения на GitHub.
+The response from the api comes an array of objects in which you are only
+interested in the following properties.
 
-```json
-"homepage": "https://your_username.github.io/your_repo_name/"
-```
+id - a unique identifier webformatURL - link to the small image for the list of
+cards largeImageURL - link to the large image for the modal window Description
+of the component <Searchbar>. The component takes one prop onSubmit - a function
+to pass the value of the iput When the form is submitted. Creates a DOM element
+of the following structure.
 
-Далее необходимо зайти в настройки GitHub-репозитория (`Settings` > `Pages`) и
-выставить раздачу продакшн версии файлов из папки `/root` ветки `gh-pages`, если
-это небыло сделано автоматически.
+<header class="searchbar">
+  <form class="form">
+    <button type="submit" class="button">
+      <span class="button-label">Search</span>
+    </button>
 
-![GitHub Pages settings](./assets/repo-settings.png)
+    <input
+      class="input"
+      type="text"
+      autocomplete="off"
+      autofocus
+      placeholder="Search images and photos"
+    />
 
-### Статус деплоя
+  </form>
+</header>
 
-Статус деплоя крайнего коммита отображается иконкой возле его идентификатора.
+Description of the <ImageGallery> component. A list of image cards. Creates a
+DOM element of the following structure.
 
-- **Желтый цвет** - выполняется сборка и деплой проекта.
-- **Зеленый цвет** - деплой завершился успешно.
-- **Красный цвет** - во время линтинга, сборки или деплоя произошла ошибка.
+<ul class="gallery">
+  <! -- Set <li> with images -->
+</ul>
 
-Более детальную информацию о статусе можно посмотреть кликнув по иконке, и в
-выпадающем окне перейти по ссылке `Details`.
+Description of the component <ImageGalleryItem>. A list item component with an
+image. Creates a DOM element of the following structure.
 
-![Deployment status](./assets/status.png)
+<li class="gallery-item">
+  <img src="" alt="" />
+</li>
 
-### Живая страница
+Description of the <Button> component Pressing the Load more button should load
+the next batch of Images and rendered with the previous ones. The button should
+be rendered only when there are some loaded images. If the image array is empty,
+the button is not rendered.
 
-Через какое-то время, обычно пару минут, живую страницу можно будет посмотреть
-по адресу указанному в отредактированном свойстве `homepage`. Например, вот
-ссылка на живую версию для этого репозитория
-[https://goitacademy.github.io/react-homework-template](https://goitacademy.github.io/react-homework-template).
+Description of the <Loader> component. Spinner component, displays while images
+are being loaded. Use any ready made component, e.g. react-loader-spinner or any
+or any other.
 
-Если открывается пустая страница, убедись что во вкладке `Console` нет ошибок
-связанных с неправильными путями к CSS и JS файлам проекта (**404**). Скорее
-всего у тебя неправильное значение свойства `homepage` в файле `package.json`.
+Description of the component <Modal>. When you click on a gallery item a modal
+window with a dark overlay and display a larger version of the image. The modal
+window should Close by pressing ESC or by clicking on the overlay.
 
-### Маршрутизация
+The appearance is similar to the functionality of this VanillaJS-plugin, only
+instead of white modal window the image is rendered (in the example press Run).
+The animation do not need to do!
 
-Если приложение использует библиотеку `react-router-dom` для маршрутизации,
-необходимо дополнительно настроить компонент `<BrowserRouter>`, передав в пропе
-`basename` точное название твоего репозитория. Слеши в начале и конце строки
-обязательны.
-
-```jsx
-<BrowserRouter basename="/your_repo_name/">
-  <App />
-</BrowserRouter>
-```
-
-## Как это работает
-
-![How it works](./assets/how-it-works.png)
-
-1. После каждого пуша в ветку `main` GitHub-репозитория, запускается специальный
-   скрипт (GitHub Action) из файла `.github/workflows/deploy.yml`.
-2. Все файлы репозитория копируются на сервер, где проект инициализируется и
-   проходит линтинг и сборку перед деплоем.
-3. Если все шаги прошли успешно, собранная продакшн версия файлов проекта
-   отправляется в ветку `gh-pages`. В противном случае, в логе выполнения
-   скрипта будет указано в чем проблема.
+<div class="overlay">
+  <div class="modal">
+    <img src="" alt="" />
+  </div>
+</div>
