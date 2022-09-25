@@ -4,6 +4,7 @@ import axios from 'axios';
 import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
 import { Gallery, GalleryList } from './ImageGallery.styled';
 import Button from './Button/Button';
+import Loader from './Loader/Loader';
 
 class ImageGallery extends Component {
   BASE_URL = 'https://pixabay.com/api/';
@@ -62,7 +63,6 @@ class ImageGallery extends Component {
   }
 
   async componentDidMount() {
-    console.log('mount');
     //   this.getImages();
   }
 
@@ -83,11 +83,10 @@ class ImageGallery extends Component {
   render() {
     const { images, total } = this.state;
     const totalPages = Math.ceil(total / this.per_page);
-    console.log(totalPages);
 
     return (
       <Gallery>
-        {this.state.loading && <div> LOADING..............</div>}
+        {this.state.loading && <Loader />}
         {this.state.error && <div>Opsss... {this.state.error}</div>}
         <GalleryList>
           {images.map(image => (
