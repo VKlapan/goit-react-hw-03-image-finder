@@ -5,7 +5,6 @@ import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
 import { Gallery, GalleryList } from './ImageGallery.styled';
 import Button from './Button/Button';
 import Loader from './Loader/Loader';
-import { Modal } from '../Modal/Modal';
 
 class ImageGallery extends Component {
   BASE_URL = 'https://pixabay.com/api/';
@@ -20,13 +19,6 @@ class ImageGallery extends Component {
     error: null,
     page: 1,
     total: 1,
-    showModal: false,
-  };
-
-  toggleModal = () => {
-    this.setState(prevState => ({
-      showModal: !prevState.showModal,
-    }));
   };
 
   searchImage = query => {
@@ -94,7 +86,6 @@ class ImageGallery extends Component {
 
     return (
       <Gallery>
-        {this.state.showModal && <Modal onClose={this.toggleModal} />}
         {this.state.loading && <Loader />}
         {this.state.error && <div>Opsss... {this.state.error}</div>}
         <GalleryList>
