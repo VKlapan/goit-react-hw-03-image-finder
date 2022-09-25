@@ -62,6 +62,17 @@ class ImageGallery extends Component {
     }
   }
 
+  scrollPage() {
+    const { height: cardHeight } = document
+      .querySelector('#gallery')
+      .firstElementChild.getBoundingClientRect();
+
+    window.scrollBy({
+      top: cardHeight,
+      behavior: 'smooth',
+    });
+  }
+
   async componentDidMount() {
     //   this.getImages();
   }
@@ -78,6 +89,7 @@ class ImageGallery extends Component {
     if (prevState.page !== this.state.page) {
       this.getImages();
     }
+    this.scrollPage();
   }
 
   render() {
@@ -85,7 +97,7 @@ class ImageGallery extends Component {
     const totalPages = Math.ceil(total / this.per_page);
 
     return (
-      <Gallery>
+      <Gallery id="gallery">
         {this.state.loading && <Loader />}
         {this.state.error && <div>Opsss... {this.state.error}</div>}
         <GalleryList>
@@ -97,7 +109,7 @@ class ImageGallery extends Component {
             />
           ))}
         </GalleryList>
-        {this.state.page < totalPages && (
+        {this.state.page < totalPages && !this.state.error && (
           <Button clickHandle={this.loadMore}>LOAD MORE</Button>
         )}
       </Gallery>
