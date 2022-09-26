@@ -23,23 +23,17 @@ export class App extends Component {
 
   async componentDidUpdate(prevProps, prevState) {
     if (prevState.query !== this.state.query) {
-      this.searchImage(this.state.query);
-    }
-
-    if (prevState.query !== this.state.query) {
       this.getImages();
     }
 
-    if (prevState.page !== this.state.page) {
+    if (
+      prevState.page !== this.state.page &&
+      prevState.query === this.state.query
+    ) {
       this.getImages();
     }
     this.scrollPage();
   }
-
-  getQuery = query => {
-    this.setState({ query: query });
-    //    console.log('app get query', this.state.query);
-  };
 
   searchImage = query => {
     this.setState({
@@ -81,7 +75,7 @@ export class App extends Component {
 
     return (
       <>
-        <Searchbar onSubmit={this.getQuery} />
+        <Searchbar onSubmit={this.searchImage} />
         <Gallery id="gallery">
           {this.state.loading && <Loader />}
           {this.state.error && <div>Opsss... {this.state.error}</div>}
